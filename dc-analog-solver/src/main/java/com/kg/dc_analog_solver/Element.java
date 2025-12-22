@@ -1,10 +1,19 @@
 package com.kg.dc_analog_solver;
 
-abstract class Element {
-    int n1, n2; // node number (0=ground)
+import java.util.Map;
 
-    Element(int n1, int n2) {
+abstract class Element {
+    String name;
+    Node n1, n2; // node number (0=ground)
+
+    Element(String name, Node n1, Node n2) {
+        this.name = name;
         this.n1 = n1;
         this.n2 = n2;
     }
+    abstract void stamp(
+            double[][] G,
+            double[] I,
+            Map<String, Integer> voltageSourceIndex
+    );
 }
