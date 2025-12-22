@@ -1,11 +1,10 @@
 package com.kg.dc_analog_solver;
 
-public class CurrentSource {
-    public final int from; // current flows from -> to
-    public final int to;
-    public final double current; // amps
+class CurrentSource extends Element {
+    double current; // flows n1 → n2
 
-    public CurrentSource(int from, int to, double current) {
-        this.from = from; this.to = to; this.current = current;
+    CurrentSource(int n1, int n2, double current) {
+        super(n1, n2);
+        this.current = current;
     }
 }
