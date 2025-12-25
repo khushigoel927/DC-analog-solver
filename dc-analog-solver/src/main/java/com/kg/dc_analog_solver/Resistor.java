@@ -15,7 +15,7 @@ public class Resistor extends Element {
         double g = 1.0 / R;
         int a = n1.id;
         int b = n2.id;
-
+        //gnd node not included in matrix
         if (a != 0) G[a - 1][a - 1] += g;
         if (b != 0) G[b - 1][b - 1] += g;
 

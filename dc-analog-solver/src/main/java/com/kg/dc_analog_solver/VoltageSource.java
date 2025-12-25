@@ -16,7 +16,7 @@ public class VoltageSource extends Element {
 
         int a = n1.id;
         int b = n2.id;
-
+        //gnd node not included in matrix
         if (a != 0) {
             G[a-1][row] += 1;
             G[row][a-1] += 1;

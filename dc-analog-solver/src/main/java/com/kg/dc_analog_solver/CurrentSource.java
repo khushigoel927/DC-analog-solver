@@ -12,7 +12,7 @@ public class CurrentSource extends Element {
     void stamp(double[][] G, double[] I, Map<String, Integer> vsIndex) {
         int a = n1.id;
         int b = n2.id;
-
+        //gnd node not included in matrix
         if (a != 0) I[a-1] -= current;
         if (b != 0) I[b-1] += current;
     }

@@ -1,1 +1,7 @@
 com/kg/dc_analog_solver/Main.class
+com/kg/dc_analog_solver/Node.class
+com/kg/dc_analog_solver/Element.class
+com/kg/dc_analog_solver/CircuitSolver.class
+com/kg/dc_analog_solver/CurrentSource.class
+com/kg/dc_analog_solver/Resistor.class
+com/kg/dc_analog_solver/VoltageSource.class
