@@ -16,4 +16,5 @@ abstract class Element {
             double[] I,
             Map<String, Integer> voltageSourceIndex
     );
+    abstract double branchCurrent(CircuitSolution sol);
 }

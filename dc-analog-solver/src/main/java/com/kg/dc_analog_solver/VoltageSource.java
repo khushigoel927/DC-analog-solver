@@ -28,4 +28,7 @@ public class VoltageSource extends Element {
 
         I[row] += V;
     }
+    double branchCurrent(CircuitSolution sol) {
+        return sol.voltageSourceCurrent(name);
+    }
 }

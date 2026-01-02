@@ -24,5 +24,10 @@ public class Resistor extends Element {
             G[b - 1][a - 1] -= g;
         }
     }
+    @Override
+    double branchCurrent(CircuitSolution sol) {
+        double v = sol.getVoltageBetween(n1.name, n2.name);
+        return v /R;
+    }
 }
 

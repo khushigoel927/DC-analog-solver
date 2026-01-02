@@ -16,5 +16,8 @@ public class CurrentSource extends Element {
         if (a != 0) I[a-1] -= current;
         if (b != 0) I[b-1] += current;
     }
-
+    @Override
+    double branchCurrent(CircuitSolution sol) {
+        return current;
+    }
 }

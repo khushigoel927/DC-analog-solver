@@ -51,13 +51,31 @@ public class CircuitSolution {
         return current == 0 ? Double.POSITIVE_INFINITY : voltageDiff / current;
     }
 
-    public double getTotalPower() {
-        double total = 0.0;
+    double branchCurrent(String elementName) {
         for (Element e : elements) {
-            //total += e.getPower(this); //need to add get power to element class
+            if (e.name.equals(elementName)) {
+                return e.branchCurrent(this);
+            }
         }
-        return total;
+        throw new IllegalArgumentException("Unknown element: " + elementName);
     }
+
+    double branchPower(String elementName) {
+        for (Element e : elements) {
+            if (e.name.equals(elementName)) {
+                double v = getVoltageBetween(e.n1.name, e.n2.name);
+                return v * e.branchCurrent(this);
+            }
+        }
+        throw new IllegalArgumentException("Unknown element: " + elementName);
+    }
+
+    double voltageSourceCurrent(String name) {
+        int idx = vsMap.get(name);
+        int offset = nodeMap.size() - 1;
+        return x[offset + idx];
+    }
+
 }
 
 
