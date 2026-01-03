@@ -1,7 +1,6 @@
 package com.kg.dc_analog_solver;
 //uses the array from CircuitSolver to read the voltages, current, power etc
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +10,13 @@ public class CircuitSolution {
     private final double[] x; // solution vector
     private final Map<String, Integer> nodeMap; // node name -> index
     private final Map<String, Integer> vsMap; // voltage source name -> index
-    private final List<Element> elements = new ArrayList<>(); // store elements if needed for power
+    private final List<Element> elements;
 
-    public CircuitSolution(double[] x, Map<String, Integer> nodeMap, Map<String, Integer> vsMap) {
+    public CircuitSolution(double[] x, Map<String, Integer> nodeMap, Map<String, Integer> vsMap, List<Element> elements) {
         this.x = x;
         this.nodeMap = nodeMap;
         this.vsMap = vsMap;
+        this.elements = elements;
     }
 
     public double getNodeVoltage(String node) {

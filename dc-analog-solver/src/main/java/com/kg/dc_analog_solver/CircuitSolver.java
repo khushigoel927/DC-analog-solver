@@ -9,7 +9,10 @@ package com.kg.dc_analog_solver;
  */
 //Circuit solvers consolidates the elements into a circuit and uses the element's stamps to make the G matrix
 
-
+import org.ejml.data.*;
+import org.ejml.dense.row.*;
+import org.ejml.interfaces.linsol.LinearSolverDense;
+import org.ejml.dense.row.factory.LinearSolverFactory_DDRM;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +20,10 @@ import java.util.Map;
 
 public class CircuitSolver {
     private Map<String, Integer> nodeMap = new HashMap<>();
-    private Map<String, Integer> voltageSourceIndex = new HashMap<>();
+    private Map<String, Integer> vsMap = new HashMap<>();
     private List<Element> elements = new ArrayList<>();
 
-    private int nextNodeIndex = 1; // node 0 = GND
+    private int nextNode = 1; // node 0 = GND
 
     public CircuitSolver() {
         nodeMap.put("GND", 0);
@@ -35,14 +38,47 @@ public class CircuitSolver {
     }
     //add voltage source to circuit
     public void addVoltageSource(String name, String np, String nm, double v) {
-        int idx = voltageSourceIndex.size();
-        voltageSourceIndex.put(name, idx);
+        int idx = vsMap.size();
+        vsMap.put(name, idx);
         elements.add(new VoltageSource(name, getNode(np), getNode(nm), v));
     }
     private Node getNode(String name) {
         if (!nodeMap.containsKey(name)) {
-            nodeMap.put(name, nextNodeIndex++);
+            nodeMap.put(name, nextNode++);
         }
         return new Node(nodeMap.get(name), name);
+    }
+    CircuitSolution solve() {
+        int n = (nextNode - 1) + vsMap.size();
+        double[][] G = new double[n][n];
+        double[] I = new double[n];
+
+
+        for (Element e : elements)
+            e.stamp(G, I, vsMap);
+
+
+        DMatrixRMaj A = new DMatrixRMaj(n, n);
+        DMatrixRMaj b = new DMatrixRMaj(n, 1);
+
+
+        for (int r = 0; r < n; r++) {
+            b.set(r, 0, I[r]);
+            for (int c = 0; c < n; c++)
+                A.set(r, c, G[r][c]);
+        }
+
+
+        LinearSolverDense<DMatrixRMaj> solver = LinearSolverFactory_DDRM.linear(n);
+        solver.setA(A);
+        DMatrixRMaj x = new DMatrixRMaj(n, 1);
+        solver.solve(b, x);
+
+
+        double[] sol = new double[n];
+        for (int i = 0; i < n; i++) sol[i] = x.get(i, 0);
+
+
+        return new CircuitSolution(sol, nodeMap, vsMap, elements);
     }
 }
