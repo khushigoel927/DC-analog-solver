@@ -23,7 +23,6 @@ public class CircuitSolution {
         int idx = nodeMap.get(node);
         return idx == 0 ? 0.0 : x[idx - 1];
     }
-
     public double getVoltageSourceCurrent(String vs) {
         int idx = vsMap.get(vs);
         return x[nodeMap.size() - 1 + idx];
@@ -31,24 +30,6 @@ public class CircuitSolution {
 
     public double getVoltageBetween(String nodeA, String nodeB) {
         return getNodeVoltage(nodeA) - getNodeVoltage(nodeB);
-    }
-
-    public double getVoltage(Element e) {
-        return getNodeVoltage(e.n1.name) - getNodeVoltage(e.n2.name);
-    }
-
-
-    public double getPowerBetween(String nodeA, String nodeB, double resistance) {
-        double voltageDiff = getVoltageBetween(nodeA, nodeB);
-        double current = voltageDiff / resistance;
-        return voltageDiff * current;
-    }
-
-
-    public double getResistanceBetween(String nodeA, String nodeB, double voltageApplied) {
-        double voltageDiff = getVoltageBetween(nodeA, nodeB);
-        double current = voltageApplied == 0 ? 0.0 : voltageDiff / voltageApplied;
-        return current == 0 ? Double.POSITIVE_INFINITY : voltageDiff / current;
     }
 
     double branchCurrent(String elementName) {
