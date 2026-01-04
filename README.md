@@ -1,7 +1,7 @@
 # DC-analog-solver
 A Java-based DC circuit solver that analyzes linear resistive circuits containing resistors, independent voltage sources, and independent current sources.
 ## Features
-- Solve arbitrary DC circuits with:
+- Solve DC circuits with:
   - Resistors
   - Independent voltage sources
   - Independent current sources
